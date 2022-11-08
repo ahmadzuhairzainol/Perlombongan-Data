@@ -1,0 +1,222 @@
+# Pengenalan Kepada R
+
+#Jenis-jenis Pembolehubah dalam R
+
+#1. Pembolehubah Kualitatif (bukan angka)
+
+	#1.1 Pembolehubah Nominal (nama/kategori)
+
+	nama<- c("Ali", "Leha", "Chin", "Raj", "Limah", "Zam")
+	kaum<- c("M", "M", "C", "I", "M", "M")
+	as.factor(kaum)
+
+		#1.1.1 Pembolehubah Dedua/Binari (Binomial)
+		#Lelaki=1 (TRUE), Perempuan=0 (FALSE)
+
+		Jantina<- c(T,F,T,T,F,T)
+		Jantina2<- ifelse(Jantina==T,"Lelaki", "Perempuan")
+		as.factor(Jantina)
+
+		#setiap huruf merupakan pembolehubah yang berbeza, such that Jantina=/=jantina
+
+	#1.2 Pembolahubah Ordinal (Boleh dipangkatkan-has hierarchy)
+	
+	SPMMath<- c("B", "A", "A+", "A-", "C", "B+")
+	as.factor(SPMMath)
+
+#2. Pembolehubah Kuantitatif
+
+	#2.1 Pembolehubah Diskret
+	umur<- c(18, 64, 20, 44, 22, 56)
+	Bil.Anak<- c(0, 3, 5, 2, 1, 6)
+	
+	#Pembolehubah Selanjar
+	income<- c(1320, 1500.01, 1678.22, 2476.99, 15001.11, 9875.63)
+	hutang<- c(-110, -1000.71, -178.226, -446.19, 0, -8766.123)
+
+#3. Kelas-kelas dalam R
+	
+	#3.1 Aksara
+	nama; kaum; Jantina; SPMMath
+
+	#3.2 Berangka
+	income; hutang
+
+	#3.3 Integer
+	umur
+
+	#3.4 Logikal
+	Jantina
+
+	#3.5 Nombor Kompleks
+	#imaginary numbers (a+bi)
+
+#4. Bentuk Data dalam R
+
+	#4.1 Skalar
+	#Vektor dengan satu unsur
+	y<- 36
+
+	#4.2 Vektor
+	#Kumpulan Nombor/Grouped Mathematical values
+	Bil.Anak
+	income
+	hutang
+	umur
+
+	#4.3 Matriks (Hanya boleh mengambil nombor sahaja)
+	#Gabungan Vektor membentuk matriks (Mempunyai set bilangan baris dan lajur)
+	data2<- cbind(income, hutang, umur, Bil.Anak)
+
+	#4.4 Bingkai Data (Data Frame)
+	#Boleh terdiri daripada kelas yang berbeza (Not only numbers like matriks)
+	data3<- data.frame(nama, Jantina, kaum, SPMMath, income, hutang, umur, Bil.Anak)
+	data4<-cbind(nama, Jantina, kaum, SPMMath, income, hutang, umur, Bil.Anak)# This data will take the values as characters and not numbers
+	
+	#4.5 List
+	#Senarai ialah gabungan vektor atau pembolehubah
+	data4<- list(x1=nama, x2=Jantina, x3=kaum, x4=SPMMath, x5=income, x6=hutang, x7=umur, x8=Bil.Anak)
+
+	#4.6 Array
+	#Matriks atau bingkai data yang lebih dari 2 dimensi
+
+5. Operator dalam R
+
+	#5.1 Operator Aritmetik
+	#Operator yang terletak antara dua operan
+	#+,-,*,/,^,
+	income+100
+	income/hutang
+
+	#5.2 Operator Hubungan
+	income>hutang
+	data3[income>2000]
+	income>2000	
+
+	#5.3 Operator Logik
+	x<-c(1:10)
+	x[(x>8)|(x<5)]
+	x[(x>8)&(x<10)]
+
+#6. Fungsi telah tersedia ada dalam R
+
+#Contoh: Mean bagi data
+y<- rnorm(100)
+mean_y<- sum(y)/length(y)
+mean(y)
+
+#Contoh: Varians bagi data
+mean_y<- sum(y)/length(y)
+var_y<- sum((y-mean_y)^2)/(length(y)-1)
+var(y)
+
+#7. Plot-plot asas dalam R
+
+	#7.1 Hitsogram
+	hist(y)
+
+	#7.2 Plot Kotak (Boxplot)
+	boxplot(income~kaum)
+	
+	#7.3 Plot Serakan (Scatter plot)
+	plot(umur, income)
+
+	#7.4 Carta Pai
+	cars<- c(10,30,15,15,30)
+	pie(cars, main="Peratusan Jualan Kereta di Malaysia", col=rainbow(length(cars)),labels=c("BMW","Honda","Toyota","Mercedez Benz","Proton"))
+	
+#important	#Fungsi Perihalan
+		summary(data3)
+
+#8. Pakej dalam R
+
+#install.packages
+install.packages("BiSEp")
+
+--------------------------------------------------------------------------------
+##TEKNIK-TEKNIK ASAS JELAJAHAN DATA MENGGUNAKAN PENGATURCARAAN R##
+--------------------------------------------------------------------------------
+
+#1. Mengindeks struktur data
+
+	#1.1 Pengindeksan mengikut struktur nombor dan nama
+	#sampel vektor
+	v<- c(1,4,6,3,2,2,8)
+
+	#ambil data posisi 2,4,7
+`	#tidak semestinya dalam susunan teratur
+	v[c(2,4,7)]
+	v[c(7,2,3)]
+
+	#sampel data frame
+	data<- read.table(header=T,text='
+		subject 	sex 	size
+		1		 M 	7
+		2		 F 	6
+		3		 F 	9	
+		4		 M 	11')
+	#ambil baris 1&2 untuk semua kolum
+	data[c(1,2), ]
+
+	#ambil lajur 2&3 untuk semua kolum
+	data[ , c(2,3)]
+	
+	#ambil baris 1&2 untuk kolum 3&1 sahaja
+	data[c(1,2),c(1,3)]
+
+	#ambil baris 1&2 untuk kolum sex & size
+	data [c(1,2), c ("sex","size")]
+
+	#Latihan
+
+	#ambil baris 2 untuk kolum 1&3 sahaja
+	data[c(2),c(1,3)]
+	
+	#ambil baris 3&1 untuk kolum subject & size
+	data[c(1,3),c("subject","size")]
+
+	#1.2 Pengindeksan mengikut vektor Boolean
+
+	#sampel vektor
+	v<- c(1,4,6,3,2,2,8)
+
+	v>5
+	v[v>5]
+
+	#data frame
+	#ambil data bagi individu dengan size kasut >7
+	xi<- data$size>7
+	data[xi,]
+
+	#1.3 Pengindeksan negatif
+	
+	#sampel vektor
+	v<- c(1,4,6,3,2,2,8)
+	
+	#buang item pertama
+	v[-1]
+
+	#buang data terakhir
+	v[-length(v)]
+
+	#1.4 Penetapan semula nilai dalam vektor
+	
+	#sampel vektor
+	v<- c(1,4,6,3,2,2,8)
+
+	v[c(3,7)]<- 87
+	
+	#1.5 Penindeksan bersyarat
+	
+	#sampel vektor
+	v<- c(1,4,6,3,2,2,8)
+
+	syarat<- v>5 & v<10
+	v[syarat]
+
+	syarat2<- v>5|v<10
+	v[syarat2]
+
+	syarat3<- v!=2
+	v[syarat3]
+
